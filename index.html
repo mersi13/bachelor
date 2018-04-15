@@ -1,0 +1,115 @@
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vega@3.2.1"></script>
+
+    <script type="text/javascript">
+        var view;
+        var vegaLine;
+        var vegaScatter;
+
+        vega.loader()
+            .load('/vega/vega_barchart_data.json')
+            .then(function (data) {
+                render(JSON.parse(data));
+            });
+
+        function render(spec) {
+            view = new vega.View(vega.parse(spec))
+                .renderer('canvas')
+                .initialize('#view')
+                .hover()
+                .run();
+        }
+
+        vega.loader()
+            .load('/vega/vega_linechart_data.json')
+            .then(function (data) {
+                renderLine(JSON.parse(data));
+            });
+
+        function renderLine(spec) {
+            vegaLine = new vega.View(vega.parse(spec))
+                .renderer('canvas')
+                .initialize('#vega-line')
+                .hover()
+                .run();
+        }
+
+        vega.loader()
+            .load('/vega/scatter_plot_data.json')
+            .then(function (data) {
+                renderScatter(JSON.parse(data));
+            });
+
+        function renderScatter(spec) {
+            vegaScatter = new vega.View(vega.parse(spec))
+                .renderer('canvas')
+                .initialize('#vega-scatter')
+                .hover()
+                .run();
+        }
+    </script>
+
+    <style>
+        .container {
+            display: flex;
+            flex-direction: row;
+            text-align: center;
+        }
+
+        .line {
+            fill: none;
+            stroke: steelblue;
+            stroke-width: 1.5px;
+        }
+        .axis path,
+        .axis line {
+            fill: none;
+            stroke: #000;
+            shape-rendering: crispEdges;
+        }
+
+        .dot {
+            stroke: #000;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="item">
+        <h1>Vega Barchart </h1>
+        <div id="view"></div>
+    </div>
+    <div class="item">
+        <h1>D3 Barchart </h1>
+        <svg class="chart"></svg>
+
+    </div>
+</div>
+
+<div class="container">
+    <div class="item">
+        <h1>Vega Linechart </h1>
+        <div id="vega-line"></div>
+    </div>
+    <div class="item">
+        <h1>D3 Linechart </h1>
+        <svg class="chart-line"></svg>
+    </div>
+</div>
+
+<div class="container">
+    <div class="item">
+        <h1>Vega Scatter Plot </h1>
+        <div id="vega-scatter"></div>
+    </div>
+    <div class="item">
+    <h1>D3 Scatter Plot </h1>
+        <svg class="chart-scatter"></svg>
+    </div>
+</div>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="/d3charts/barchart.js"></script>
+<script src="/d3charts/linechart.js"></script>
+<script src="/d3charts/scatter.js"></script>
+
+</body>
